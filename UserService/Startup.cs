@@ -28,9 +28,11 @@ namespace UserService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            AddDbContexts(services);
             services.AddUserCoreServices();
             services.AddUserRepoServices();
-            AddDbContexts(services);
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
@@ -41,6 +43,8 @@ namespace UserService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware(typeof(ExceptionLogMiddleware));
 
             app.UseRouting();
 

@@ -9,6 +9,7 @@ namespace User.Api.Extension
         public AutoMapperProfileExtension()
         {
             CreateMap<SysUser, UserDTO>();
+            CreateMap<UserDTO, SysUser>();
         }
     }
 }

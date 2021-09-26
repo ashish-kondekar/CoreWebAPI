@@ -15,7 +15,7 @@ namespace User.Repo
         {
             modelBuilder.Entity<SysUser>(entity =>
             {
-                entity.HasKey(k => k.Id).IsClustered(true);
+                entity.HasKey(k => k.UserId).IsClustered(true);
             });
         }
     }

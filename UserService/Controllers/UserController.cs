@@ -20,36 +20,59 @@ namespace User.Api.Controllers
             this.userService = userService;
         }
 
-        // GET: api/<UserController>
+        /// <summary>
+        /// Get single user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<UserDTO>> Get()
         {
             return await userService.GetUsers().ConfigureAwait(false);
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public async Task<UserDTO> Get(int id)
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("{userId}")]
+        public async Task<UserDTO> Get([FromRoute] int userId)
         {
-            return await userService.GetUser(id).ConfigureAwait(false);
+            return await userService.GetUser(userId).ConfigureAwait(false);
         }
 
-        // POST api/<UserController>
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <param name="user"></param>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<UserDTO>> Post([FromBody] UserDTO user)
         {
+            var sysUser = await userService.CreateUser(user).ConfigureAwait(false);
+            return Created(HttpContext.Request.Path, sysUser);
         }
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        /// <summary>
+        /// Update user 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="user"></param>
+        [HttpPut("{userId}")]
+        public async Task<ActionResult> Put([FromRoute] int userId, [FromBody] UserDTO user)
         {
+            await userService.UpdateUser(userId, user).ConfigureAwait(false);
+            return Ok();
         }
 
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <param name="userId"></param>
+        [HttpDelete("{userId}")]
+        public async Task<ActionResult> Delete([FromRoute] int userId)
         {
+            await userService.DeleteUser(userId).ConfigureAwait(false);
+            return Ok();
         }
     }
 }
