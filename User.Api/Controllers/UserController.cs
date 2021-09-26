@@ -1,15 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using User.Core;
 using User.Core.Interfaces.Core;
-using User.Repo;
 
 namespace User.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -46,10 +43,9 @@ namespace User.Api.Controllers
         /// </summary>
         /// <param name="user"></param>
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> Post([FromBody] UserDTO user)
+        public async Task Post([FromBody] UserDTO user)
         {
-            var sysUser = await userService.CreateUser(user).ConfigureAwait(false);
-            return Created(HttpContext.Request.Path, sysUser);
+            await userService.CreateUser(user).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -58,10 +54,9 @@ namespace User.Api.Controllers
         /// <param name="userId"></param>
         /// <param name="user"></param>
         [HttpPut("{userId}")]
-        public async Task<ActionResult> Put([FromRoute] int userId, [FromBody] UserDTO user)
+        public async Task Put([FromRoute] int userId, [FromBody] UserDTO user)
         {
             await userService.UpdateUser(userId, user).ConfigureAwait(false);
-            return Ok();
         }
 
         /// <summary>
@@ -69,10 +64,9 @@ namespace User.Api.Controllers
         /// </summary>
         /// <param name="userId"></param>
         [HttpDelete("{userId}")]
-        public async Task<ActionResult> Delete([FromRoute] int userId)
+        public async Task Delete([FromRoute] int userId)
         {
             await userService.DeleteUser(userId).ConfigureAwait(false);
-            return Ok();
         }
     }
 }
