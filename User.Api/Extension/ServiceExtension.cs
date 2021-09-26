@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using User.Core.Interfaces.Core;
 using User.Core;
+using User.Core.Interfaces.Core;
 using User.Core.Interfaces.Repo;
 using User.Repo;
 

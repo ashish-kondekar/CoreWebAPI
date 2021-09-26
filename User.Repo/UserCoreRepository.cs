@@ -17,7 +17,7 @@ namespace User.Repo
         public async Task<SysUser> GetUser(int userId)
         {
             return await context.Users.AsTracking()
-                .SingleAsync(user => user.UserId == userId)
+                .FirstOrDefaultAsync(user => user.UserId == userId)
                 .ConfigureAwait(false);
         }
 
