@@ -41,7 +41,8 @@ namespace User.Core
             var sysUser = await _userRepo.GetUser(userId).ConfigureAwait(false);
 
             if (sysUser == null) throw new BusinessException("User not found.");
-
+            
+            _mapper.Map(user, sysUser);
             sysUser.FirstName = user.FirstName;
             sysUser.Address = user.Address;
             sysUser.Contact = user.Contact;
